@@ -11,7 +11,10 @@ import androidx.compose.ui.unit.dp
 import pt.rafaelr22.cinemabookingapp.data.model.Seat
 
 @Composable
-fun SeatSelectionScreen() {
+fun SeatSelectionScreen(
+    onConfirmBooking: () -> Unit
+)
+{
 
     var selectedSeat by remember {
         mutableStateOf<Seat?>(null)
@@ -69,7 +72,7 @@ fun SeatSelectionScreen() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { }
+            onClick = onConfirmBooking
         ) {
             Text("Confirm Booking")
         }
