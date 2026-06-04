@@ -14,7 +14,11 @@ fun MovieDetailsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(
+                top = 48.dp,
+                start = 16.dp,
+                end = 16.dp
+            )
     ) {
 
         Text(
