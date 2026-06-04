@@ -10,7 +10,10 @@ import pt.rafaelr22.cinemabookingapp.data.model.Movie
 import pt.rafaelr22.cinemabookingapp.ui.components.MovieCard
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onMovieClick: () -> Unit
+)
+{
 
     val movies = listOf(
         Movie(

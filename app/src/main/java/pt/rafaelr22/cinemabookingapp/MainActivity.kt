@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import pt.rafaelr22.cinemabookingapp.ui.screens.HomeScreen
+import pt.rafaelr22.cinemabookingapp.navigation.AppNavigation
 import pt.rafaelr22.cinemabookingapp.ui.theme.CinemaBookingAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CinemaBookingAppTheme {
-                HomeScreen()
+                AppNavigation()
             }
         }
     }
