@@ -11,9 +11,14 @@ import androidx.compose.ui.unit.dp
 import pt.rafaelr22.cinemabookingapp.data.model.Movie
 
 @Composable
-fun MovieCard(movie: Movie) {
+fun MovieCard(
+    movie: Movie,
+    onClick: () -> Unit
+)
+{
 
     Card(
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)

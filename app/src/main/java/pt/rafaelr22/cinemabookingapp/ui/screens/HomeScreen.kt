@@ -57,7 +57,11 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         movies.forEach { movie ->
-            MovieCard(movie = movie)
+            MovieCard(
+                movie = movie,
+                onClick = onMovieClick
+            )
+
         }
     }
 }
