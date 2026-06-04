@@ -9,7 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MovieDetailsScreen() {
+fun MovieDetailsScreen(
+    onBookTicketClick: () -> Unit
+)
+{
 
     Column(
         modifier = Modifier
@@ -40,7 +43,9 @@ fun MovieDetailsScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(onClick = { }) {
+        Button(
+            onClick = onBookTicketClick
+        ) {
             Text("Book Ticket")
         }
     }

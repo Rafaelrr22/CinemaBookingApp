@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pt.rafaelr22.cinemabookingapp.ui.screens.HomeScreen
 import pt.rafaelr22.cinemabookingapp.ui.screens.MovieDetailsScreen
+import pt.rafaelr22.cinemabookingapp.ui.screens.SeatSelectionScreen
+
 
 @Composable
 fun AppNavigation() {
@@ -26,7 +28,15 @@ fun AppNavigation() {
         }
 
         composable(Screen.MovieDetails.route) {
-            MovieDetailsScreen()
+            MovieDetailsScreen(
+                onBookTicketClick = {
+                    navController.navigate(Screen.SeatSelection.route)
+                }
+            )
+        }
+
+        composable(Screen.SeatSelection.route) {
+            SeatSelectionScreen()
         }
     }
 }
