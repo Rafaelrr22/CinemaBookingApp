@@ -14,7 +14,6 @@ import pt.rafaelr22.cinemabookingapp.viewmodel.BookingViewModel
 import pt.rafaelr22.cinemabookingapp.data.model.Movie
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import pt.rafaelr22.cinemabookingapp.data.database.DatabaseProvider
 import pt.rafaelr22.cinemabookingapp.data.repository.ReservationRepository
 import pt.rafaelr22.cinemabookingapp.viewmodel.BookingViewModelFactory
@@ -126,11 +125,14 @@ fun AppNavigation() {
         }
 
         composable(Screen.SeatSelection.route) {
-            SeatSelectionScreen(
-                onConfirmBooking = { seat ->
 
-                    println("MOVIE = $selectedMovieTitle")
-                    println("SEAT = $seat")
+            val reservedSeats by bookingViewModel
+                .reservedSeats
+                .collectAsState()
+
+            SeatSelectionScreen(
+                reservedSeats = reservedSeats,
+                onConfirmBooking = { seat ->
 
                     selectedSeat = seat
 
@@ -139,14 +141,14 @@ fun AppNavigation() {
                         seat
                     )
 
-                    println("DEBUG -> ${bookingViewModel.reservations}")
-
                     navController.navigate(
                         Screen.BookingConfirmation.route
                     )
                 },
                 onBackHome = {
-                    navController.navigate(Screen.Home.route)
+                    navController.navigate(
+                        Screen.Home.route
+                    )
                 }
             )
         }
@@ -172,6 +174,9 @@ fun AppNavigation() {
 
             BookingHistoryScreen(
                 reservations = reservations,
+                onClearHistory = {
+                    bookingViewModel.clearHistory()
+                },
                 onBackHome = {
                     navController.navigate(Screen.Home.route)
                 }

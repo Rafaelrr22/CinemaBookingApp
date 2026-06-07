@@ -21,4 +21,8 @@ class ReservationRepository(
     fun getReservedSeats(): Flow<List<String>> {
         return reservationDao.getReservedSeats()
     }
+
+    suspend fun deleteAllReservations() {
+        reservationDao.deleteAllReservations()
+    }
 }

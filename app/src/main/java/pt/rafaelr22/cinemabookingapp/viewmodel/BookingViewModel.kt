@@ -42,4 +42,11 @@ class BookingViewModel(
             )
         }
     }
+
+    fun clearHistory() {
+
+        viewModelScope.launch {
+            repository.deleteAllReservations()
+        }
+    }
 }

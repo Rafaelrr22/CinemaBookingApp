@@ -10,11 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import pt.rafaelr22.cinemabookingapp.data.model.Reservation
+import androidx.compose.material3.Card
+import androidx.compose.foundation.layout.fillMaxWidth
 
 
 @Composable
 fun BookingHistoryScreen(
     reservations: List<Reservation>,
+    onClearHistory: () -> Unit,
     onBackHome: () -> Unit
 ) {
 
@@ -33,20 +36,63 @@ fun BookingHistoryScreen(
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-
-
-        LazyColumn {
-
-            items(reservations) { reservation ->
-
-                Text(
-                    text =
-                        "${reservation.movieTitle} - Seat ${reservation.seat}"
-                )
-            }
+        Button(
+            onClick = onClearHistory
+        ) {
+            Text("Clear History")
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+
+
+        if (reservations.isEmpty()) {
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "No reservations found",
+                style = MaterialTheme.typography.bodyLarge
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+        } else {
+
+            LazyColumn {
+
+                items(reservations) { reservation ->
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+
+                        Column(
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+
+                            Text(
+                                text = "🎬 ${reservation.movieTitle}",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+
+                            Spacer(
+                                modifier = Modifier.height(8.dp)
+                            )
+
+                            Text(
+                                text = "💺 Seat ${reservation.seat}"
+                            )
+                        }
+                    }
+                }
+            } }
+
+
 
         Button(
             onClick = onBackHome

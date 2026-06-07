@@ -13,6 +13,7 @@ import pt.rafaelr22.cinemabookingapp.data.model.Seat
 
 @Composable
 fun SeatSelectionScreen(
+    reservedSeats: List<String>,
     onConfirmBooking: (String) -> Unit,
     onBackHome: () -> Unit
 ) {
@@ -27,11 +28,7 @@ fun SeatSelectionScreen(
         Seat('C',1), Seat('C',2), Seat('C',3), Seat('C',4)
     )
 
-    // TEMPORÁRIO
-    val occupiedSeats = listOf(
-        "A1",
-        "B2"
-    )
+
 
     Column(
         modifier = Modifier
@@ -61,7 +58,7 @@ fun SeatSelectionScreen(
                     "${seat.row}${seat.number}"
 
                 val isOccupied =
-                    seatCode in occupiedSeats
+                    seatCode in reservedSeats
 
                 Button(
                     onClick = {
@@ -72,17 +69,19 @@ fun SeatSelectionScreen(
                     colors = ButtonDefaults.buttonColors(
                         containerColor =
                             when {
-                                isOccupied ->
-                                    Color.Red
+                                isOccupied -> Color.Red
 
                                 selectedSeat == seat ->
                                     MaterialTheme.colorScheme.secondary
 
                                 else ->
                                     MaterialTheme.colorScheme.primary
-                            }
+                            },
+
+                        disabledContainerColor = Color(0xFFD32F2F),
+                        disabledContentColor = Color.White
                     )
-                ) {
+                ){
                     Text(seatCode)
                 }
             }

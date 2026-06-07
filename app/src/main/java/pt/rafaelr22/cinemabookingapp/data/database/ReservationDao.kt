@@ -20,4 +20,7 @@ interface ReservationDao {
 
     @Query("SELECT seat FROM reservations")
     fun getReservedSeats(): Flow<List<String>>
+
+    @Query("DELETE FROM reservations")
+    suspend fun deleteAllReservations()
 }
