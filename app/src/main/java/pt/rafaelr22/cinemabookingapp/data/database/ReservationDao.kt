@@ -1,8 +1,8 @@
-
-/*
 package pt.rafaelr22.cinemabookingapp.data.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import pt.rafaelr22.cinemabookingapp.data.model.Reservation
 
@@ -15,7 +15,5 @@ interface ReservationDao {
     )
 
     @Query("SELECT * FROM reservations")
-    fun getReservations(): Flow<List<Reservation>>
+    fun getAllReservations(): Flow<List<Reservation>>
 }
-
- */

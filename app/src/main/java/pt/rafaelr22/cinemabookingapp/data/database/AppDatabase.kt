@@ -1,4 +1,4 @@
-/*
+
 package pt.rafaelr22.cinemabookingapp.data.database
 
 import androidx.room.Database
@@ -14,4 +14,3 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun reservationDao(): ReservationDao
 }
 
- */
