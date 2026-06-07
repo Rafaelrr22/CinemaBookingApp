@@ -23,6 +23,9 @@ fun AppNavigation() {
     var selectedMovieTitle by remember {
         mutableStateOf("")
     }
+    var selectedSeat by remember {
+        mutableStateOf("")
+    }
 
 
 
@@ -97,6 +100,8 @@ fun AppNavigation() {
                     println("MOVIE = $selectedMovieTitle")
                     println("SEAT = $seat")
 
+                    selectedSeat = seat
+
                     bookingViewModel.addReservation(
                         selectedMovieTitle,
                         seat
@@ -113,6 +118,8 @@ fun AppNavigation() {
 
         composable(Screen.BookingConfirmation.route) {
             BookingConfirmationScreen(
+                movieTitle = selectedMovieTitle,
+                seat = selectedSeat,
                 onBackHome = {
                     navController.navigate(Screen.Home.route)
                 },

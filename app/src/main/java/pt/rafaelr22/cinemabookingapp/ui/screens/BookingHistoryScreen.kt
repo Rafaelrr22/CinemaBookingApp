@@ -8,10 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import pt.rafaelr22.cinemabookingapp.data.model.Reservation
+
 
 @Composable
 fun BookingHistoryScreen(
-    reservations: List<String>
+    reservations: List<Reservation>
 ) {
 
     Column(
@@ -31,15 +33,15 @@ fun BookingHistoryScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //Text("Total reservations: ${reservations.size}")
+
 
         LazyColumn {
 
             items(reservations) { reservation ->
 
                 Text(
-                    text = reservation,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    text =
+                        "${reservation.movieTitle} - Seat ${reservation.seat}"
                 )
             }
         }
