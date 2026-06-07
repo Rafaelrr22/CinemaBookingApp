@@ -11,6 +11,8 @@ import pt.rafaelr22.cinemabookingapp.ui.screens.BookingConfirmationScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pt.rafaelr22.cinemabookingapp.ui.screens.BookingHistoryScreen
 import pt.rafaelr22.cinemabookingapp.viewmodel.BookingViewModel
+import pt.rafaelr22.cinemabookingapp.data.model.Movie
+import androidx.compose.runtime.*
 
 
 @Composable
@@ -18,32 +20,29 @@ fun AppNavigation() {
 
     val navController = rememberNavController()
     val bookingViewModel: BookingViewModel = viewModel()
-
-
-    if (bookingViewModel.reservations.isEmpty()) {
-        bookingViewModel.addReservation(
-            "Dune: Part Two",
-            "A1"
-        )
-
-        bookingViewModel.addReservation(
-            "Oppenheimer",
-            "B3"
-        )
+    var selectedMovieTitle by remember {
+        mutableStateOf("")
     }
+
+
+
 
 
     // CODIGO QUE DEFINE ONE A APP VAI ABRIR
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route
+        //startDestination = Screen.BookingHistory.route
     ) {
 
         composable(Screen.Home.route) {
             HomeScreen(
                 onMovieClick = { movie ->
+
+                    selectedMovieTitle = movie.title
+
                     navController.navigate(
-                        Screen.MovieDetails.createRoute(movie.title)
+                        Screen.MovieDetails.createRoute(movie.id)
                     )
                 }
             )
@@ -53,12 +52,38 @@ fun AppNavigation() {
             route = Screen.MovieDetails.route
         ) { backStackEntry ->
 
-            val movieTitle =
-                backStackEntry.arguments?.getString("movieTitle")
-                    ?: "Unknown Movie"
+            val movieId =
+                backStackEntry.arguments?.getString("movieId")
+                    ?.toIntOrNull() ?: 1
+
+            val movie = when (movieId) {
+                1 -> Movie(
+                    1,
+                    "Dune: Part Two",
+                    "Sci-Fi",
+                    "166 min",
+                    "Paul Atreides unites with the Fremen..."
+                )
+
+                2 -> Movie(
+                    2,
+                    "Deadpool & Wolverine",
+                    "Action",
+                    "127 min",
+                    "Deadpool joins forces with Wolverine..."
+                )
+
+                else -> Movie(
+                    3,
+                    "Oppenheimer",
+                    "Drama",
+                    "180 min",
+                    "The story of J. Robert Oppenheimer..."
+                )
+            }
 
             MovieDetailsScreen(
-                movieTitle = movieTitle,
+                movie = movie,
                 onBookTicketClick = {
                     navController.navigate(Screen.SeatSelection.route)
                 }
@@ -67,8 +92,21 @@ fun AppNavigation() {
 
         composable(Screen.SeatSelection.route) {
             SeatSelectionScreen(
-                onConfirmBooking = {
-                    navController.navigate(Screen.BookingConfirmation.route)
+                onConfirmBooking = { seat ->
+
+                    println("MOVIE = $selectedMovieTitle")
+                    println("SEAT = $seat")
+
+                    bookingViewModel.addReservation(
+                        selectedMovieTitle,
+                        seat
+                    )
+
+                    println("DEBUG -> ${bookingViewModel.reservations}")
+
+                    navController.navigate(
+                        Screen.BookingConfirmation.route
+                    )
                 }
             )
         }
@@ -77,6 +115,9 @@ fun AppNavigation() {
             BookingConfirmationScreen(
                 onBackHome = {
                     navController.navigate(Screen.Home.route)
+                },
+                onViewHistory = {
+                    navController.navigate(Screen.BookingHistory.route)
                 }
             )
         }

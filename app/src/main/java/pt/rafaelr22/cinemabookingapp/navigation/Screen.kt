@@ -2,9 +2,10 @@ package pt.rafaelr22.cinemabookingapp.navigation
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
-    object MovieDetails : Screen("movie_details/{movieTitle}") {
-        fun createRoute(movieTitle: String) =
-            "movie_details/$movieTitle"
+    object MovieDetails : Screen("movie_details/{movieId}") {
+
+        fun createRoute(movieId: Int) =
+            "movie_details/$movieId"
     }
     object SeatSelection : Screen("seat_selection")
 

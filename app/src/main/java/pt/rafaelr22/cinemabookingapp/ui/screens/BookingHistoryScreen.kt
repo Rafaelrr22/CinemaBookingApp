@@ -31,6 +31,8 @@ fun BookingHistoryScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        //Text("Total reservations: ${reservations.size}")
+
         LazyColumn {
 
             items(reservations) { reservation ->

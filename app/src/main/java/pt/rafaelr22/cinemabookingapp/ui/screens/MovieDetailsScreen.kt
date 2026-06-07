@@ -7,10 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import pt.rafaelr22.cinemabookingapp.data.model.Movie
 
 @Composable
 fun MovieDetailsScreen(
-    movieTitle: String,
+    movie: Movie,
     onBookTicketClick: () -> Unit
 )
 {
@@ -32,15 +33,13 @@ fun MovieDetailsScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(movieTitle)
-        Text("Genre: Sci-Fi")
-        Text("Duration: 166 min")
+        Text(movie.title)
+        Text("Genre: ${movie.genre}")
+        Text("Duration: ${movie.duration}")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            "Paul Atreides unites with the Fremen to seek revenge against those who destroyed his family."
-        )
+        Text(movie.description)
 
         Spacer(modifier = Modifier.height(24.dp))
 

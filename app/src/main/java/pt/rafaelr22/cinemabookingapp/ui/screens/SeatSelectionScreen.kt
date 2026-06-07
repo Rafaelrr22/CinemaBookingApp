@@ -12,7 +12,7 @@ import pt.rafaelr22.cinemabookingapp.data.model.Seat
 
 @Composable
 fun SeatSelectionScreen(
-    onConfirmBooking: () -> Unit
+    onConfirmBooking: (String) -> Unit
 )
 {
 
@@ -80,7 +80,13 @@ fun SeatSelectionScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = onConfirmBooking,
+            onClick = {
+                selectedSeat?.let {
+                    onConfirmBooking(
+                        "${it.row}${it.number}"
+                    )
+                }
+            },
             enabled = selectedSeat != null
         ) {
             Text("Confirm Booking")

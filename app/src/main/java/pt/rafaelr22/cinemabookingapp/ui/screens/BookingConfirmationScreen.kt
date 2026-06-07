@@ -10,7 +10,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BookingConfirmationScreen(
-    onBackHome: () -> Unit
+    onBackHome: () -> Unit,
+    onViewHistory: () -> Unit
 ) {
 
     Column(
@@ -30,7 +31,7 @@ fun BookingConfirmationScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text("Movie: Dune: Part Two")
+        Text("Movie reserved successfully")
         Text("Seat successfully reserved")
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -39,6 +40,14 @@ fun BookingConfirmationScreen(
             onClick = onBackHome
         ) {
             Text("Back to Home")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = onViewHistory
+        ) {
+            Text("View History")
         }
     }
 }
