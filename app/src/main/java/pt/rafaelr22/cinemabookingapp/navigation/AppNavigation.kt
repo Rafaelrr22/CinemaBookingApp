@@ -36,8 +36,7 @@ fun AppNavigation() {
     // CODIGO QUE DEFINE ONE A APP VAI ABRIR
     NavHost(
         navController = navController,
-        //startDestination = Screen.Home.route
-        startDestination = Screen.BookingHistory.route
+        startDestination = Screen.Home.route
     ) {
 
         composable(Screen.Home.route) {

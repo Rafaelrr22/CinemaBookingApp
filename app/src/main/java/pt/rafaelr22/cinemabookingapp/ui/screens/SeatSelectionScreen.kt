@@ -54,7 +54,14 @@ fun SeatSelectionScreen(
                     onClick = {
                         selectedSeat = seat
                     },
-                    modifier = Modifier.padding(4.dp)
+                    modifier = Modifier.padding(4.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor =
+                            if (selectedSeat == seat)
+                                MaterialTheme.colorScheme.secondary
+                            else
+                                MaterialTheme.colorScheme.primary
+                    )
                 ) {
                     Text("${seat.row}${seat.number}")
                 }
@@ -66,13 +73,15 @@ fun SeatSelectionScreen(
         Text(
             text = selectedSeat?.let {
                 "Selected Seat: ${it.row}${it.number}"
-            } ?: "No seat selected"
+            } ?: "No seat selected",
+            style = MaterialTheme.typography.titleMedium
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = onConfirmBooking
+            onClick = onConfirmBooking,
+            enabled = selectedSeat != null
         ) {
             Text("Confirm Booking")
         }
