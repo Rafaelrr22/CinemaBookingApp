@@ -1,26 +1,38 @@
 package pt.rafaelr22.cinemabookingapp.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import pt.rafaelr22.cinemabookingapp.data.model.Reservation
+import pt.rafaelr22.cinemabookingapp.data.repository.ReservationRepository
 
-class BookingViewModel : ViewModel() {
+class BookingViewModel(
+    private val repository: ReservationRepository
+) : ViewModel() {
 
-    private val _reservations =
-        mutableStateListOf<Reservation>()
-
-    val reservations: List<Reservation>
-        get() = _reservations
+    val reservations =
+        repository.getAllReservations()
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                emptyList()
+            )
 
     fun addReservation(
         movie: String,
         seat: String
     ) {
-        _reservations.add(
-            Reservation(
-                movieTitle = movie,
-                seat = seat
+
+        viewModelScope.launch {
+
+            repository.insertReservation(
+                Reservation(
+                    movieTitle = movie,
+                    seat = seat
+                )
             )
-        )
+        }
     }
 }

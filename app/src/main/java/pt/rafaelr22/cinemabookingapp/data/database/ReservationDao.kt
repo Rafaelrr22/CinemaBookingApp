@@ -2,6 +2,7 @@ package pt.rafaelr22.cinemabookingapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import pt.rafaelr22.cinemabookingapp.data.model.Reservation
@@ -9,7 +10,7 @@ import pt.rafaelr22.cinemabookingapp.data.model.Reservation
 @Dao
 interface ReservationDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReservation(
         reservation: Reservation
     )
