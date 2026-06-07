@@ -11,7 +11,7 @@ import pt.rafaelr22.cinemabookingapp.ui.components.MovieCard
 
 @Composable
 fun HomeScreen(
-    onMovieClick: () -> Unit
+    onMovieClick: (Movie) -> Unit
 )
 {
 
@@ -59,7 +59,9 @@ fun HomeScreen(
         movies.forEach { movie ->
             MovieCard(
                 movie = movie,
-                onClick = onMovieClick
+                onClick = {
+                    onMovieClick(movie)
+                }
             )
 
         }

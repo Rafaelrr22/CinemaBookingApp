@@ -41,14 +41,24 @@ fun AppNavigation() {
 
         composable(Screen.Home.route) {
             HomeScreen(
-                onMovieClick = {
-                    navController.navigate(Screen.MovieDetails.route)
+                onMovieClick = { movie ->
+                    navController.navigate(
+                        Screen.MovieDetails.createRoute(movie.title)
+                    )
                 }
             )
         }
 
-        composable(Screen.MovieDetails.route) {
+        composable(
+            route = Screen.MovieDetails.route
+        ) { backStackEntry ->
+
+            val movieTitle =
+                backStackEntry.arguments?.getString("movieTitle")
+                    ?: "Unknown Movie"
+
             MovieDetailsScreen(
+                movieTitle = movieTitle,
                 onBookTicketClick = {
                     navController.navigate(Screen.SeatSelection.route)
                 }

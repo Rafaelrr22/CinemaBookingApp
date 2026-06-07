@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MovieDetailsScreen(
+    movieTitle: String,
     onBookTicketClick: () -> Unit
 )
 {
@@ -31,7 +32,7 @@ fun MovieDetailsScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Dune: Part Two")
+        Text(movieTitle)
         Text("Genre: Sci-Fi")
         Text("Duration: 166 min")
 
