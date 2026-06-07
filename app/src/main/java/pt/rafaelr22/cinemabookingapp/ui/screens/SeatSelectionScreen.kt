@@ -7,14 +7,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pt.rafaelr22.cinemabookingapp.data.model.Seat
 
 @Composable
 fun SeatSelectionScreen(
-    onConfirmBooking: (String) -> Unit
-)
-{
+    onConfirmBooking: (String) -> Unit,
+    onBackHome: () -> Unit
+) {
 
     var selectedSeat by remember {
         mutableStateOf<Seat?>(null)
@@ -24,6 +25,12 @@ fun SeatSelectionScreen(
         Seat('A',1), Seat('A',2), Seat('A',3), Seat('A',4),
         Seat('B',1), Seat('B',2), Seat('B',3), Seat('B',4),
         Seat('C',1), Seat('C',2), Seat('C',3), Seat('C',4)
+    )
+
+    // TEMPORÁRIO
+    val occupiedSeats = listOf(
+        "A1",
+        "B2"
     )
 
     Column(
@@ -50,20 +57,33 @@ fun SeatSelectionScreen(
 
             items(seats) { seat ->
 
+                val seatCode =
+                    "${seat.row}${seat.number}"
+
+                val isOccupied =
+                    seatCode in occupiedSeats
+
                 Button(
                     onClick = {
                         selectedSeat = seat
                     },
+                    enabled = !isOccupied,
                     modifier = Modifier.padding(4.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor =
-                            if (selectedSeat == seat)
-                                MaterialTheme.colorScheme.secondary
-                            else
-                                MaterialTheme.colorScheme.primary
+                            when {
+                                isOccupied ->
+                                    Color.Red
+
+                                selectedSeat == seat ->
+                                    MaterialTheme.colorScheme.secondary
+
+                                else ->
+                                    MaterialTheme.colorScheme.primary
+                            }
                     )
                 ) {
-                    Text("${seat.row}${seat.number}")
+                    Text(seatCode)
                 }
             }
         }
@@ -90,6 +110,12 @@ fun SeatSelectionScreen(
             enabled = selectedSeat != null
         ) {
             Text("Confirm Booking")
+        }
+
+        Button(
+            onClick = onBackHome
+        ) {
+            Text("Return Home")
         }
     }
 }

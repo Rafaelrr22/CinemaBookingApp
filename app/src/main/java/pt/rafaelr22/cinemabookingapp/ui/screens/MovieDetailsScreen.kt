@@ -12,7 +12,8 @@ import pt.rafaelr22.cinemabookingapp.data.model.Movie
 @Composable
 fun MovieDetailsScreen(
     movie: Movie,
-    onBookTicketClick: () -> Unit
+    onBookTicketClick: () -> Unit,
+    onBackHome: () -> Unit
 )
 {
 
@@ -47,6 +48,12 @@ fun MovieDetailsScreen(
             onClick = onBookTicketClick
         ) {
             Text("Book Ticket")
+        }
+
+        Button(
+            onClick = onBackHome
+        ) {
+            Text("Return Home")
         }
     }
 }

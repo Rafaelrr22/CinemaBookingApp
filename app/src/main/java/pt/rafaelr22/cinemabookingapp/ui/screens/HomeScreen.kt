@@ -1,6 +1,8 @@
 package pt.rafaelr22.cinemabookingapp.ui.screens
 
+
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,7 +13,8 @@ import pt.rafaelr22.cinemabookingapp.ui.components.MovieCard
 
 @Composable
 fun HomeScreen(
-    onMovieClick: (Movie) -> Unit
+    onMovieClick: (Movie) -> Unit,
+    onHistoryClick: () -> Unit
 )
 {
 
@@ -65,5 +68,16 @@ fun HomeScreen(
             )
 
         }
+
+        Button(
+            onClick = onHistoryClick
+        ) {
+            Text("Booking History")
+        }
+
+
+
     }
+
+
 }

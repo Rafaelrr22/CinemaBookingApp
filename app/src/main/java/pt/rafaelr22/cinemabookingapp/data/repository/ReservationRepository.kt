@@ -17,4 +17,8 @@ class ReservationRepository(
     ) {
         reservationDao.insertReservation(reservation)
     }
+
+    fun getReservedSeats(): Flow<List<String>> {
+        return reservationDao.getReservedSeats()
+    }
 }

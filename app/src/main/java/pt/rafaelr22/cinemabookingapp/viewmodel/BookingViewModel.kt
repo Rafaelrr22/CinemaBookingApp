@@ -20,6 +20,13 @@ class BookingViewModel(
                 emptyList()
             )
 
+    val reservedSeats =
+        repository.getReservedSeats()
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                emptyList()
+            )
     fun addReservation(
         movie: String,
         seat: String

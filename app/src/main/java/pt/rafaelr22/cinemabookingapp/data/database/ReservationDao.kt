@@ -17,4 +17,7 @@ interface ReservationDao {
 
     @Query("SELECT * FROM reservations")
     fun getAllReservations(): Flow<List<Reservation>>
+
+    @Query("SELECT seat FROM reservations")
+    fun getReservedSeats(): Flow<List<String>>
 }

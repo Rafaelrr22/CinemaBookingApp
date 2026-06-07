@@ -13,13 +13,37 @@ import pt.rafaelr22.cinemabookingapp.ui.screens.BookingHistoryScreen
 import pt.rafaelr22.cinemabookingapp.viewmodel.BookingViewModel
 import pt.rafaelr22.cinemabookingapp.data.model.Movie
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import pt.rafaelr22.cinemabookingapp.data.database.DatabaseProvider
+import pt.rafaelr22.cinemabookingapp.data.repository.ReservationRepository
+import pt.rafaelr22.cinemabookingapp.viewmodel.BookingViewModelFactory
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 
 @Composable
 fun AppNavigation() {
 
     val navController = rememberNavController()
-    val bookingViewModel: BookingViewModel = viewModel()
+
+    val context = LocalContext.current
+
+    val database =
+        DatabaseProvider.getDatabase(context)
+
+    val repository =
+        ReservationRepository(
+            database.reservationDao()
+        )
+
+    val bookingViewModel: BookingViewModel =
+        viewModel(
+            factory = BookingViewModelFactory(
+                repository
+            )
+        )
+
     var selectedMovieTitle by remember {
         mutableStateOf("")
     }
@@ -46,6 +70,11 @@ fun AppNavigation() {
 
                     navController.navigate(
                         Screen.MovieDetails.createRoute(movie.id)
+                    )
+                },
+                onHistoryClick = {
+                    navController.navigate(
+                        Screen.BookingHistory.route
                     )
                 }
             )
@@ -89,6 +118,9 @@ fun AppNavigation() {
                 movie = movie,
                 onBookTicketClick = {
                     navController.navigate(Screen.SeatSelection.route)
+                },
+                        onBackHome = {
+                    navController.navigate(Screen.Home.route)
                 }
             )
         }
@@ -112,6 +144,9 @@ fun AppNavigation() {
                     navController.navigate(
                         Screen.BookingConfirmation.route
                     )
+                },
+                onBackHome = {
+                    navController.navigate(Screen.Home.route)
                 }
             )
         }
@@ -131,8 +166,15 @@ fun AppNavigation() {
 
         composable(Screen.BookingHistory.route) {
 
+            val reservations by bookingViewModel
+                .reservations
+                .collectAsState()
+
             BookingHistoryScreen(
-                reservations = bookingViewModel.reservations
+                reservations = reservations,
+                onBackHome = {
+                    navController.navigate(Screen.Home.route)
+                }
             )
         }
     }
