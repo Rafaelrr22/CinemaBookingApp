@@ -8,16 +8,36 @@ import pt.rafaelr22.cinemabookingapp.ui.screens.HomeScreen
 import pt.rafaelr22.cinemabookingapp.ui.screens.MovieDetailsScreen
 import pt.rafaelr22.cinemabookingapp.ui.screens.SeatSelectionScreen
 import pt.rafaelr22.cinemabookingapp.ui.screens.BookingConfirmationScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
+import pt.rafaelr22.cinemabookingapp.ui.screens.BookingHistoryScreen
+import pt.rafaelr22.cinemabookingapp.viewmodel.BookingViewModel
 
 
 @Composable
 fun AppNavigation() {
 
     val navController = rememberNavController()
+    val bookingViewModel: BookingViewModel = viewModel()
 
+
+    if (bookingViewModel.reservations.isEmpty()) {
+        bookingViewModel.addReservation(
+            "Dune: Part Two",
+            "A1"
+        )
+
+        bookingViewModel.addReservation(
+            "Oppenheimer",
+            "B3"
+        )
+    }
+
+
+    // CODIGO QUE DEFINE ONE A APP VAI ABRIR
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        //startDestination = Screen.Home.route
+        startDestination = Screen.BookingHistory.route
     ) {
 
         composable(Screen.Home.route) {
@@ -49,6 +69,13 @@ fun AppNavigation() {
                 onBackHome = {
                     navController.navigate(Screen.Home.route)
                 }
+            )
+        }
+
+        composable(Screen.BookingHistory.route) {
+
+            BookingHistoryScreen(
+                reservations = bookingViewModel.reservations
             )
         }
     }
